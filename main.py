@@ -1,4 +1,17 @@
-gameboard = [[0,0,0,0,0,0,0,0,0,0],
+import random
+
+user_gameboard = [[0,0,0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0,0,0],
+             [0,0,0,0,0,0,0,0,0,0]]
+
+console_gameboard = [[0,0,0,0,0,0,0,0,0,0],
              [0,0,0,0,0,0,0,0,0,0],
              [0,0,0,0,0,0,0,0,0,0],
              [0,0,0,0,0,0,0,0,0,0],
@@ -27,7 +40,7 @@ def print_board(gameboard):
                 row += str(gameboard[i][j]) + "\n"
     print(row)
 
-def placing_ship(gameboard, ship):
+def placing_ship(gameboard, ship, whoisit):
     if ship.hv_orient is True:
         if ship.lr_ud_orient.upper() == "L":
             for i in range (1, ship.size + 1):
@@ -43,7 +56,8 @@ def placing_ship(gameboard, ship):
                             gameboard[10 - ship.row_coordinate][ship.col_coordinate - u] = 0
                         print("Ship overlapped with an existing one.")
                         print("Choose a different set of coordinates.")
-                        print_board(gameboard)
+                        if whoisit is True:
+                            print_board(gameboard)
                         return gameboard, True
                     else:
                         if ship.size == 3:
@@ -64,7 +78,8 @@ def placing_ship(gameboard, ship):
                             gameboard[10 - ship.row_coordinate][(ship.col_coordinate - 2) + u] = 0
                         print("Ship overlapped with an existing one.")
                         print("Choose a different set of coordinates.")
-                        print_board(gameboard)
+                        if whoisit is True:
+                            print_board(gameboard)
                         return gameboard, True
                     else:
                         if ship.size == 3:
@@ -85,7 +100,8 @@ def placing_ship(gameboard, ship):
                             gameboard[11 - ship.row_coordinate - u][ship.col_coordinate - 1] = 0
                         print("Ship overlapped with an existing one.")
                         print("Choose a different set of coordinates.")
-                        print_board(gameboard)
+                        if whoisit is True:
+                            print_board(gameboard)
                         return gameboard, True
                     else:
                         if ship.size == 3:
@@ -96,27 +112,26 @@ def placing_ship(gameboard, ship):
             for i in range (0, ship.size):
                 real_row_coordinate = 10 - ship.row_coordinate + i
                 real_col_coordinate = ship.col_coordinate - 1
-                print(f"i: {i}")
-                print(f"Row: {ship.row_coordinate}")
-                print(f"Real row: {real_row_coordinate}")
                 if ship.size == 2:
                     gameboard[real_row_coordinate][real_col_coordinate] = "B"
                 elif ship.size > 2:
                     if gameboard[real_row_coordinate][real_col_coordinate] != 0:
                         #Undo previous placements
                         for u in range (1, i):
-                            gameboard[10 - ship.row_coordinate - u][ship.col_coordinate - 1] = 0
+                            gameboard[10 - ship.row_coordinate + u][ship.col_coordinate - 1] = 0
                         print("Ship overlapped with an existing one.")
                         print("Choose a different set of coordinates.")
-                        print_board(gameboard)
+                        if whoisit is True:
+                            print_board(gameboard)
                         return gameboard, True
                     else:
                         if ship.size == 3:
                             gameboard[real_row_coordinate][real_col_coordinate] = "S"
                         elif ship.size == 4:
                             gameboard[real_row_coordinate][real_col_coordinate] = "D"
-    print("Boat placed successfully.")
-    print_board(gameboard)
+    if whoisit is True:
+        print("Boat placed successfully.")
+        print_board(gameboard)
     return gameboard, False
 
 def val_placing(ship):
@@ -151,10 +166,6 @@ for i in range (0,3):
     redo = True
     while redo:
         ships = ["BOAT", "SUBMARINE", "DESTROYER"]
-        '''col = None
-        row = None
-        orient_hv = None
-        orient_lr_ud = None'''
         print("Coordinates must be from 1 to 10.")
         while True:
                 col_input = input(f"Enter column or X coordinate to locate your {ships[i]}: ").strip()
@@ -205,11 +216,36 @@ for i in range (0,3):
                 else:
                     print("Invalid orientation. Please enter U for Up or D for Down.")
         print("All inputs are valid.")
-            
         ship = Shipset(2 + i, col, row, orient_hv, orient_lr_ud)
         is_place_check = val_placing(ship)
+        whoisit = True
         if is_place_check is True:
-            gameboard, redo = placing_ship(gameboard, ship)
+            user_gameboard, redo = placing_ship(user_gameboard, ship, whoisit)
         else:
             print("Invalid placement. Please try again.")
-    
+
+for i in range (0,3):
+    redo = True
+    while redo:
+        ships = ["BOAT", "SUBMARINE", "DESTROYER"]
+        while True:
+            col = random.randint(1,10)
+            row = random.randint(1,10)
+            orient_hv = random.choice(['H','V'])
+            if orient_hv == "H":
+                orient_hv = True
+                orient_lr_ud = random.choice(['L','R'])
+            elif orient_hv == "V":
+                orient_hv = False
+                orient_lr_ud = random.choice(['U','D'])
+            ship = Shipset(2 + i, col, row, orient_hv, orient_lr_ud)
+            is_place_check = val_placing(ship)
+            whoisit = False
+            if is_place_check is True:
+                console_gameboard, redo = placing_ship(console_gameboard, ship, whoisit)
+                break
+
+print("User's Gameboard")
+print_board(user_gameboard)
+print("Console's Gameboard")
+print_board(console_gameboard)
