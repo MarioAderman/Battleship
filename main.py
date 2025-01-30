@@ -2,6 +2,7 @@ from gameboard import Gameboard
 from ship import Ship
 from utils import user_ships, console_ships
 from txt_generation import save_boards_to_txt
+from game import start_game
 
 def main():
     
@@ -23,6 +24,11 @@ def main():
     
     # Save boards to text files
     save_boards_to_txt(user_gameboard, console_gameboard)
+    
+    # Start the game
+    start_game(user_gameboard, console_gameboard)
+    
+    print("Thank you for playing Battleship!")
 
 if __name__ == '__main__':
     main()

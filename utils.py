@@ -91,7 +91,9 @@ def placing_ship(gameboard, ship, whoisit):
                             gameboard.board[real_row_coordinate][real_col_coordinate] = "D"
     if whoisit is True:
         print("Boat placed successfully.")
+        print("---------------------------------")
         gameboard.print_board()
+        print("---------------------------------")
     return gameboard, False
 
 def val_placing(ship):
@@ -123,6 +125,28 @@ def val_placing(ship):
             return False
 
 def user_ships(gameboard, ships):
+    print("---------------------------------")
+    print("Welcome to Battleship!")
+    print("---------------------------------")
+    print("You will place 3 ships on the board.")
+    print("Boat: 2 spaces")
+    print("Submarine: 3 spaces")
+    print("Destroyer: 4 spaces")
+    print("---------------------------------")
+    print("The gameboard is a 10x10 grid that looks like this.")
+    print("  1 2 3 4 5 6 7 8 9 10")
+    print("A 0 0 0 0 0 0 0 0 0 0")
+    print("B 0 0 0 0 0 0 0 0 0 0")
+    print("C 0 0 0 0 0 0 0 0 0 0")
+    print("D 0 0 0 0 0 0 0 0 0 0")
+    print("E 0 0 0 0 0 0 0 0 0 0")
+    print("F 0 0 0 0 0 0 0 0 0 0")
+    print("G 0 0 0 0 0 0 0 0 0 0")
+    print("H 0 0 0 0 0 0 0 0 0 0")
+    print("I 0 0 0 0 0 0 0 0 0 0")
+    print("J 0 0 0 0 0 0 0 0 0 0")
+    print("---------------------------------")
+    print("Use it for reference when placing your ships.")
     for i in range (3):
         redo = True
         while redo:
@@ -137,16 +161,14 @@ def user_ships(gameboard, ships):
                             print("Invalid input. Please enter a number between 1 and 10.")
                     else:
                         print("Please enter a valid number")
+            print("Coordinates must be from A to J.")
             while True:
-                    row_input = input(f"Enter row or Y coordinate to locate your {ships[i].name}: ").strip()
-                    if row_input.isdigit():
-                        row = int(row_input)
-                        if 1 <= row <= 10:
-                            break
-                        else:
-                            print("Invalid input. Please enter a number between 1 and 10.")
+                    row_input = input(f"Enter row or Y coordinate to locate your {ships[i].name}: ").strip().upper()
+                    if len(row_input) == 1 and row_input >= 'A' and row_input <= 'J':
+                        row = row_input
+                        break
                     else:
-                        print("Please enter a valid number")
+                        print("Please enter a valid letter between A and J.")
             print("Orientation must be H for Horizontal or V for Vertical.")
             print("As well as L for Left or R for Right if Horizontal.")
             print("And U for Up or D for Down if Vertical.")
@@ -177,7 +199,7 @@ def user_ships(gameboard, ships):
                         print("Invalid orientation. Please enter U for Up or D for Down.")
             print("All inputs are valid.")
             ships[i].col_coordinate = col
-            ships[i].row_coordinate = row
+            ships[i].row_coordinate = 10 - (ord(row) - ord('A'))
             ships[i].hv_orient = orient_hv
             ships[i].lr_ud_orient = orient_lr_ud
             is_place_check = val_placing(ships[i])
@@ -210,4 +232,4 @@ def console_ships(gameboard, ships):
                 whoisit = False
                 if is_place_check is True:
                     gameboard, redo = placing_ship(gameboard, ships[i], whoisit)
-                    breakgit
+                    break
