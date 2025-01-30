@@ -210,4 +210,4 @@ def console_ships(gameboard, ships):
                 whoisit = False
                 if is_place_check is True:
                     gameboard, redo = placing_ship(gameboard, ships[i], whoisit)
-                    break
+                    breakgit
