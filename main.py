@@ -22,7 +22,7 @@ def main():
     # Place console's ships randomly
     console_ships(console_gameboard, ships)
     
-    # Save boards to text files
+    # Save boards to text files for user visualization
     save_boards_to_txt(user_gameboard, console_gameboard)
     
     # Start the game

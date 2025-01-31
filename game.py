@@ -1,5 +1,6 @@
 import random
 
+#See who goes first by tossing a coin
 def tossing_coin():
     coin = ['HEADS', 'TAILS']
     while True:
@@ -22,12 +23,14 @@ def hit(row_hit, col_hit, gameboard, whoisit):
             print("You missed!")
         else:
             print("Console missed!")
+        # Mark the miss on the board
         gameboard.board[ord(row_hit) - 65][col_hit - 1] = 'X'
     elif gameboard.board[ord(row_hit) - 65][col_hit - 1] == 'B':
         if whoisit is True:    
             print("You hit a boat!")
         else:
             print("Console hit a boat!")
+        # Mark the hit on the board
         gameboard.board[ord(row_hit) - 65][col_hit - 1] = 'H'
         for i in range(10):
             for j in range(10):
@@ -108,7 +111,6 @@ def start_game(user_gameboard, console_gameboard):
         # User's turn
         if start_player is True:
             console_gameboard = user_hit(console_gameboard)
-            console_gameboard.print_board()
             start_player = False
             did_user_win = check_if_game_over(console_gameboard)
             if did_user_win == True:

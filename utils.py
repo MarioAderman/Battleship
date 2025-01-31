@@ -1,6 +1,7 @@
 import random
 
 def placing_ship(gameboard, ship, whoisit):
+    #Places the ship on the board avoiding overlapping
     if ship.hv_orient is True:
         if ship.lr_ud_orient.upper() == "L":
             for i in range (1, ship.size + 1):
@@ -96,6 +97,7 @@ def placing_ship(gameboard, ship, whoisit):
         print("---------------------------------")
     return gameboard, False
 
+#Check if the ship can be placed based on board boundaties ans ship size
 def val_placing(ship):
     if ship.hv_orient is True:
         if ship.lr_ud_orient.upper() == "L":
@@ -151,6 +153,7 @@ def user_ships(gameboard, ships):
         redo = True
         while redo:
             print("Coordinates must be from 1 to 10.")
+            #Input validations
             while True:
                     col_input = input(f"Enter column or X coordinate to locate your {ships[i].name}: ").strip()
                     if col_input.isdigit():
@@ -198,18 +201,22 @@ def user_ships(gameboard, ships):
                     else:
                         print("Invalid orientation. Please enter U for Up or D for Down.")
             print("All inputs are valid.")
+            #Assigning values to the ship object
             ships[i].col_coordinate = col
             ships[i].row_coordinate = 10 - (ord(row) - ord('A'))
             ships[i].hv_orient = orient_hv
             ships[i].lr_ud_orient = orient_lr_ud
+            #Validating the placement
             is_place_check = val_placing(ships[i])
             whoisit = True
             if is_place_check is True:
+                #redo is a flag to check if the ship was placed successfully
                 gameboard, redo = placing_ship(gameboard, ships[i], whoisit)
             else:
                 print("Invalid placement. Please try again.")
     return gameboard
 
+#Randomly places the console's ships
 def console_ships(gameboard, ships):
     for i in range (0,3):
         redo = True
