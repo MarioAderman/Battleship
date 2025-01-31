@@ -54,7 +54,7 @@ This is a **single-player mode** where you play against the console. Here's how 
 
 ## 🙏 Acknowledgments
 
-A big shoutout to **DeepSeek* for helping improve the code'ssynta and structure!
+A big shoutout to **DeepSeek** for helping improve the code'ssynta and structure!
 
 ---
 Enjoy the game, and may the best captain win! ⚓
