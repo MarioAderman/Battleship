@@ -23,7 +23,6 @@ def hit(row_hit, col_hit, gameboard, whoisit):
         else:
             print("Console missed!")
         gameboard.board[ord(row_hit) - 65][col_hit - 1] = 'X'
-        return gameboard
     elif gameboard.board[ord(row_hit) - 65][col_hit - 1] == 'B':
         if whoisit is True:    
             print("You hit a boat!")
@@ -34,7 +33,6 @@ def hit(row_hit, col_hit, gameboard, whoisit):
             for j in range(10):
                 if gameboard.board[i][j] == 'B':
                     gameboard.board[i][j] = 'H'
-        return gameboard
     elif gameboard.board[ord(row_hit) - 65][col_hit - 1] == 'S':
         if whoisit is True:
             print("You hit a submarine!")
@@ -45,7 +43,6 @@ def hit(row_hit, col_hit, gameboard, whoisit):
             for j in range(10):
                 if gameboard.board[i][j] == 'S':
                     gameboard.board[i][j] = 'H'
-        return gameboard
     elif gameboard.board[ord(row_hit) - 65][col_hit - 1] == 'D':
         if whoisit is True:    
             print("You hit a destroyer!")
@@ -56,7 +53,7 @@ def hit(row_hit, col_hit, gameboard, whoisit):
             for j in range(10):
                 if gameboard.board[i][j] == 'D':
                     gameboard.board[i][j] = 'H'
-        return gameboard
+    return gameboard
     
 def user_hit(console_gameboard):
     print("It's your turn!")
