@@ -4,6 +4,8 @@ from utils import user_ships, console_ships
 from txt_generation import save_boards_to_txt
 from game import start_game
 
+# Run main.py first
+
 def main():
     
     ships = [
